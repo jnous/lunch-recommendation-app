@@ -6,19 +6,19 @@
             return "green";
         }
     }
+
+
 </script>
 
 <div class="resultitem">
-    <h1>{restaurantItem.restaurantName}</h1>
-    <p>{restaurantItem.description}</p>
-    <p style={"color: " + scoreColor(restaurantItem.score)}>{restaurantItem.score}</p>
-    <address>{restaurantItem.address}</address>
+    <h1>{restaurantItem.tags.name}</h1>
+    {#if restaurantItem.tags.cuisine}
+        <p>{restaurantItem.tags.cuisine}</p>
+    {/if}
+    <address>{restaurantItem.tags['addr:street']} {restaurantItem.tags['addr:housenumber']}</address>
 </div>
 
 <style>
-    h1 {
-
-    }
     .resultitem {
         display: flex;
         flex-direction: column;

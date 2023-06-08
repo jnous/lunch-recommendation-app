@@ -1,22 +1,30 @@
 <script>
-    import Resultitem from "../components/resultitem.svelte";
-    export let restaurantItems;
-    export let searchCriteria;
+	import Resultitem from '../components/resultitem.svelte';
+	export let restaurantItems;
+	export let searchCriteria;
+
+	function search(data, criteria) {
+		if (!criteria) {
+			return data;
+		}
+		return data.filter((item) => {
+			return (
+				item.tags.name?.toLowerCase().includes(criteria?.toLowerCase()) ||
+				item.tags.cuisine?.toLowerCase().includes(criteria?.toLowerCase())
+			);
+		});
+	}
+	let items = search();
 </script>
 
-
 <div class="resultlist">
-    {#each restaurantItems as restaurantItem}
-        {#if restaurantItem.restaurantName.toLowerCase().includes(searchCriteria?.toLowerCase())}
-            <Resultitem restaurantItem={restaurantItem}></Resultitem>
-        {:else if !searchCriteria}
-            <Resultitem restaurantItem={restaurantItem}></Resultitem>
-        {/if}
-    {/each}
+	{#each search(restaurantItems, searchCriteria) as restaurantItem}
+		<Resultitem {restaurantItem} />
+	{/each}
 </div>
 
 <style>
-    .resultlist { 
-        margin-top: 2rem;
-    }
+	.resultlist {
+		margin-top: 2rem;
+	}
 </style>
